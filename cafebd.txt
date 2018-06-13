@@ -1,0 +1,68 @@
+CREATE DATABASE CAFEBD;
+
+USE CAFEBD;
+
+
+CREATE TABLE TIPO_PRODUCTO
+(
+	id_tipo_producto int not null AUTO_INCREMENT primary key,
+	descripcion varchar(50) not null)
+ENGINE=InnoDB;
+
+CREATE TABLE PRODUCTO
+(
+	id_producto int not null AUTO_INCREMENT primary key ,
+	nombre varchar(50) not null,
+	imagen varchar(50) not null,
+	cantidad int not null,
+	valor int not null,
+	id_tipo_producto int not null,
+	foreign key(id_tipo_producto) references TIPO_PRODUCTO        (id_tipo_producto))
+ENGINE=InnoDB;
+
+CREATE TABLE FORMA_PAGO
+(
+	id_forma_pago int not null AUTO_INCREMENT primary key ,
+	descripcion varchar(50) not null)
+ENGINE=InnoDB;
+
+
+CREATE TABLE VENTA
+(
+	id_venta int not null AUTO_INCREMENT primary key ,
+	valor_venta int not null,
+	id_forma_pago int not null,
+	foreign key(id_forma_pago) references FORMA_PAGO(id_forma_pago))
+ENGINE=InnoDB;
+
+
+CREATE TABLE PROVEEDOR
+(
+	rut_proveedor int not null AUTO_INCREMENT primary key ,
+	razon_social varchar(50) not null)
+ENGINE=InnoDB;
+
+CREATE TABLE ORDEN_COMPRA (
+	id_orden int not null AUTO_INCREMENT primary key ,
+	id_producto int not null,
+	valor_orden int not null,
+	foreign key(id_producto) references PRODUCTO(id_producto))
+ENGINE=InnoDB;
+
+
+CREATE TABLE DOCUMENTO
+(
+	id_documento int not null AUTO_INCREMENT primary key ,
+	id_venta int not null,
+	id_orden int not null,
+	foreign key(id_venta) references VENTA(id_venta),
+	foreign key(id_orden) references ORDEN_COMPRA(id_orden))
+ENGINE=InnoDB;
+
+
+CREATE TABLE USUARIO
+(
+	id_usuario int not null AUTO_INCREMENT primary key,
+	username varchar(20) not null,
+	password varchar(20) not null)
+ENGINE=InnoDB;
